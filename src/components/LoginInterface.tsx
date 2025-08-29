@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 
 import { signInWithGoogle, signOut } from "@/lib/auth"
 
-export default function LoginPage() {
+export default function LoginInterface() {
 
     const handleSignIn = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();

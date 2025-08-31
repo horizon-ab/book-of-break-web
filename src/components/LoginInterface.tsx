@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 
 import { signInWithGoogle, signOut } from "@/lib/auth"
+import { addTestMove, readTestMoves } from "@/lib/firestore"
 
 export default function LoginInterface() {
 
@@ -16,10 +17,20 @@ export default function LoginInterface() {
         signOut();
     }
 
+    const handleAddTestMove = (event: React.MouseEvent<HTMLButtonElement>) => {
+        addTestMove();
+    }
+
+    const handleReadTestMoves = (event: React.MouseEvent<HTMLButtonElement>) => {
+        readTestMoves();
+    }
+
     return (
         <div className="flex flex-col gap-10">
             <Button onClick={handleSignIn}>Log In</Button>
             <Button onClick={handleSignOut}>Log Out</Button>
+            <Button onClick={handleAddTestMove}>Add Test Move</Button>
+            <Button onClick={handleReadTestMoves}>Read Test Move</Button>
         </div>
     )
 }

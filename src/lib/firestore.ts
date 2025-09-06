@@ -1,4 +1,4 @@
-import { collection, addDoc, getDocs, query, where, limit } from "firebase/firestore"
+import { collection, addDoc, getDocs, query, where, limit, onSnapshot } from "firebase/firestore"
 
 import { getAuthenticatedAppForUser } from "./serverApp"
 import { db } from "@/lib/clientApp"
@@ -46,7 +46,7 @@ export async function addMove(user: User, move: Move) {
     }
 }
 
-export async function getMovesByUser(user: User) {
+export async function listenMovesByUser(user: User, callback: Function) {
     
     try {
 
@@ -59,9 +59,17 @@ export async function getMovesByUser(user: User) {
             limit(moveLimit),
         )
 
+        return onSnapshot(getMovesByUserQuery, (querySnapshot) => {
+            const moves = querySnapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            callback(moves);
+        });
+
     } catch (error) {
         console.log("getMovesByUser() failed: ", error);
-        return null;
+        return () => {};
     }
 }
 

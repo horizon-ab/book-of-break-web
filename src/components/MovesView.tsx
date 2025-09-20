@@ -8,7 +8,7 @@ export default function MovesView({ user }: {user: User}) {
     const [moves, setMoves] = useState<MoveWithId[] | null>(null);
 
     useEffect(() => {
-        let unsubscribe: () => void;
+        let unsubscribe: (() => void) = () => {};
 
         const setupListener = async () => {
             unsubscribe = await listenMovesByUser(user, (newMoves: MoveWithId[]) => {
@@ -20,8 +20,6 @@ export default function MovesView({ user }: {user: User}) {
 
         return () => unsubscribe();
     }, [user]);
-
-    if (!user) return <div>No user found!</div>
 
     return (
         <div className="grid grid-cols-5 gap-5">

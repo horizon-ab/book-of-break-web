@@ -5,6 +5,7 @@ import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGrou
 import { User } from "firebase/auth"
 
 import { signOut } from "@/lib/auth"
+import { redirectToPath } from "@/lib/actions"
 
 const loggedInLinks = [
     {
@@ -23,7 +24,10 @@ const loggedInLinks = [
         "name" : "sign out",
         "type" : "function",
         "link" : "/",
-        "function" : () => signOut()
+        "function" : () => {
+            signOut();
+            redirectToPath("/login")
+        }
     }
 ]
 
@@ -68,7 +72,7 @@ export function AppSideBar() {
                                 ) : (
                                 <SidebarMenuItem key={item.name}>
                                     <SidebarMenuButton asChild>
-                                        <button onClick={() => item.function}>
+                                        <button onClick={item.function}>
                                             <span>{item.name}</span>
                                         </button>
                                     </SidebarMenuButton>

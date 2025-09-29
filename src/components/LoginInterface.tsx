@@ -5,11 +5,14 @@ import { Button } from "@/components/ui/button"
 import { signInWithGoogle, signOut } from "@/lib/auth"
 import { addTestMove, readTestMoves } from "@/lib/firestore"
 
+import { redirectToPath } from "@/lib/actions"
+
 export default function LoginInterface() {
 
     const handleSignIn = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         signInWithGoogle();
+        redirectToPath('/home/moves')
     }
 
     const handleSignOut = (event: React.MouseEvent<HTMLButtonElement>) => {

@@ -2,7 +2,14 @@ import { User } from "firebase/auth";
 import { listenMovesByUser } from "@/lib/firestore";
 import { SetStateAction, useEffect, useState } from "react";
 
-import { MoveWithId } from "@/lib/types";
+import { Move, MoveWithId } from "@/lib/types";
+import { addMove } from "@/lib/firestore";
+
+const sampleMove: Move = {
+    name: "Coffee-grinder",
+    description: "Basic inward sweep",
+    tags: []
+}
 
 export default function MovesView({ user }: {user: User}) {
     const [moves, setMoves] = useState<MoveWithId[] | null>(null);
@@ -29,6 +36,9 @@ export default function MovesView({ user }: {user: User}) {
                     <div className="text-md">{move.description}</div>
                 </div>
             ))}
+            <div key="addMove" className="border border-2 border-dashed p-5" onClick={() => addMove(user, sampleMove)}>
+                <div className="text-lg text-center">Add move</div>
+            </div>
         </div>
     )
 
